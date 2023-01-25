@@ -15,7 +15,7 @@ link_directories(
 )
 
 # add the executable
-file(GLOB SOURCE_FILES CONFIGURE_DEPENDS "src/*.h" "src/*.cpp")
+file(GLOB SOURCE_FILES CONFIGURE_DEPENDS "src/*.h" "src/*.cpp" "src/vulkan/*.cpp")
 add_executable(
         app
         ${SOURCE_FILES}

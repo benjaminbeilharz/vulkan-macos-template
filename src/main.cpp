@@ -1,24 +1,24 @@
-#include <iostream>
+#define GLFW_INCLUDE_VULKAN
 #include "vulkan/vulkan.hpp"
+#include <GLFW/glfw3.h>
+#include <iostream>
+
 
 int main()
 {
-	std::vector<const char *> extNames;
-	extNames.push_back(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
-	extNames.push_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+	glfwInit();
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Hello Vulkan!", nullptr, nullptr);
+	uint32_t extensionCount = 0;
+	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
-	VkInstance  instance;
-	VkInstanceCreateInfo instanceInfo = {};
-	instanceInfo.flags = VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
-	instanceInfo.enabledExtensionCount = static_cast<uint32_t>(extNames.size());
-	instanceInfo.ppEnabledExtensionNames = extNames.data();
-
-	VkResult result = vkCreateInstance(&instanceInfo, NULL, &instance);
-
-	if (result == VK_SUCCESS) {
-		printf("Instance created successfully.");
-	} else {
-		printf("Instance created failed with error_code %d \n", result);
+	while(!glfwWindowShouldClose(window))
+	{
+		glfwPollEvents();
 	}
+
+	glfwDestroyWindow(window);
+	glfwTerminate();
+
 	return 0;
 }
